@@ -1,0 +1,61 @@
+import random
+
+#unos vrednosti
+n  = int(input("broj Bernulijevih opita u simulaciji je: "))
+if n<0:
+    print("Nevalidan unos! Unesite pozitivan ceo broj")
+    exit()
+    
+p = float(input("Verovatnoca uspeha je: "))
+if p>1 or p<0:
+    print("Nevalidan unos! Unesite pozitivan broj od 0 do 1")
+    exit()
+    
+N  = int(input("broj simulacija je: "))
+if N<0:
+    print("Nevalidan unos! Unesite pozitivan ceo broj")
+    exit()
+
+    
+
+#ovo je matrica koja ce sadrzati ishode svih opita u svim simulacijama
+matricaIshoda=[]
+
+#while petlja u kojoj formiramo matricu
+k=0
+while k<N:
+    i=0
+    listasimulacije=[]
+    while i<n:
+        j = random.uniform(0,1)  
+        if j>p:
+         listasimulacije.insert(i,0)
+         i=i+1
+        else:
+         listasimulacije.insert(i,1)
+         i=i+1
+    matricaIshoda.insert(k, listasimulacije)
+    k=k+1
+
+#inicijalizacija liste koja cuva podatke o brojevima uspeha u svakoj simulaciji
+listabrojauspeha=[]
+for i in range(n+1):
+    listabrojauspeha.insert(i,0)
+    
+#popunjavanje te liste
+for i in range(N):
+    brojac=0
+    for j in range(n):
+        if matricaIshoda[i][j]==1:
+            brojac=brojac+1
+            j=j+1
+    listabrojauspeha[brojac]=listabrojauspeha[brojac]+1
+    i=i+1
+    
+#formiranje izlazne liste koja sadrzi podatke o frekvencijama mogucih vrednosti broja uspeha
+izlaz=[]
+for i in range(n+1):
+    izlaz.insert(i, listabrojauspeha[i]/N)
+    print("broj simulacija sa ", i, " uspesna ishoda je ", izlaz[i])
+        
+print(izlaz) 
